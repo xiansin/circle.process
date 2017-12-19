@@ -29,7 +29,7 @@
     });
 
 	circleProcess.process();
-License
+### License
 MIT © Zhou JianJia
 
 [完整配置项](https://raw.githubusercontent.com/xiansin/circle.process/master/res/config.json "完整配置项")

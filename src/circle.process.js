@@ -2,7 +2,7 @@
  * circle.process v0.0.1
  * https://github.com/xiansin/circle.process
  *
- * Copyright (c) 2014-2017 xiansin
+ * Copyright (c) 2014-2017 Zhou JianJia
  * Released under the MIT license
  *
  * Date: 2017-12-19 14:01:36
