@@ -1,0 +1,42 @@
+{
+  "size": "half",
+  "lineWidth": 5,
+  "radius": 100,
+  "position": "center",
+  "percent": 80,
+  "process": 0.00,
+  "backgroundCircle": {
+    "show": true,
+    "color": "#eee",
+    "roundX": 0,
+    "roundY": 0,
+    "startAngle": 0,
+    "endAngle": 0
+  },
+  "percentCircle": {
+    "show": true,
+    "color": "",
+    "speed": "gradient"
+  },
+  "startSmallCircle": {
+    "show": true,
+    "color": "#06a8f3",
+    "radius": 5
+  },
+  "endSmallCircle": {
+    "show": true,
+    "color": "#00f8bb",
+    "radius": 5
+  },
+  "gradient": {
+    "color": ""
+  },
+  "processText": {
+    "show": true,
+    "fontSize": 20,
+    "color": "#ccc",
+    "follow": false,
+    "textAlign": "center",
+    "textBaseline": "alphabetic"
+  }
+}

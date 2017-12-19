@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>圆环渐变</title>
+    <!--<link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <style type="text/css">
+        .white{
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+<!--Header-->
+<header class="navbar navbar-light navbar-expand-md bg-primary">
+    <div class="container">
+        <a class="navbar-brand white" href="./">CircleProcess.js</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse"
+                aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbar-collapse" role="navigation">
+            <nav class="nav navbar-nav">
+                <a class="nav-link white" href="https://github.com/xiansin/circle.process"
+                   data-toggle="tooltip" title="View the GitHub project">Github</a>
+            </nav>
+        </div>
+    </div>
+</header>
+<!--content-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <canvas id="canvas" width="300" height="300" class=""></canvas>
+        </div>
+        <div class="col-md-7">
+
+        </div>
+    </div>
+</div>
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p class="heart"></p>
+        <nav class="nav flex-wrap justify-content-center mb-3">
+            <a class="nav-link" href="https://github.com/xiansin/circle.process">GitHub</a>
+            <a class="nav-link" href="https://github.com/xiansin/circle.process">Examples</a>
+            <a class="nav-link" href="https://github.com/xiansin/circle.process/blob/master/LICENSE">License</a>
+            <a class="nav-link" href="https://github.com/xiansin">About</a>
+        </nav>
+    </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>
+<script src="../src/circle.process.min.js"></script>
+<script type="text/javascript">
+    var circleProcess = CircleProcess(document.getElementById("canvas"));
+    circleProcess.setOption({
+        "percent": 60,
+        "startSmallCircle": {
+            "radius": 6
+        },
+        "endSmallCircle": {
+            "radius": 12
+        },
+        "processText": {
+            "color": "red"
+        }
+    });
+    circleProcess.process();
+    console.log(circleProcess);
+</script>
+</body>
+</html>
