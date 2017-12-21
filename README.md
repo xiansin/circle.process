@@ -1,5 +1,5 @@
 # circle.process
-使用圆环来表示渐进
+使用圆环来表示进度
 
 ### 效果：
 
@@ -32,4 +32,4 @@
 ### License
 MIT © Zhou JianJia
 
-[完整配置项](https://raw.githubusercontent.com/xiansin/circle.process/master/res/config.json "完整配置项")
+[完整配置项](https://github.com/xiansin/circle.process/blob/master/res/config.json "完整配置项")
