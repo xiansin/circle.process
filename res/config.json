@@ -1,42 +1,40 @@
 {
-  "size": "half",
-  "lineWidth": 5,
-  "radius": 100,
-  "position": "center",
-  "percent": 80,
-  "process": 0.00,
-  "backgroundCircle": {
-    "show": true,
-    "color": "#eee",
-    "roundX": 0,
-    "roundY": 0,
-    "startAngle": 0,
-    "endAngle": 0
+  "size": "half", // complete,half,incomplete
+  "lineWidth": 5, // 线宽
+  "radius": 100,  // 圆弧半径
+  "percent": 80,  // 百分比
+  "process": 0.00, // 起始值
+  "backgroundCircle": { // 背景圆弧
+    "show": true, // 是否显示
+    "color": "#eee" // 圆弧颜色
   },
-  "percentCircle": {
-    "show": true,
-    "color": "",
-    "speed": "gradient"
+  "percentCircle": { // 百分比圆弧
+    "show": true, // 是否显示
+    "color": "#f00", // 颜色
+    "speed": "gradient", // 速度 gradient normal fast
+    "gradientColorShow": false, // 是否显示梯度颜色
+    "gradientColor": "rgba(255.0.0,0.1)" // 梯度颜色 暂时不可用
   },
-  "startSmallCircle": {
-    "show": true,
-    "color": "#06a8f3",
-    "radius": 5
+  "startSmallCircle": { // 起始圆点
+    "show": true,// 是否显示
+    "color": "#06a8f3",// 颜色
+    "radius": 5 // 半径
   },
-  "endSmallCircle": {
-    "show": true,
-    "color": "#00f8bb",
-    "radius": 5
+  "endSmallCircle": { // 结束圆点
+    "show": true, // 是否显示
+    "color": "#00f8bb", // 颜色
+    "radius": 5 // 半径
   },
-  "gradient": {
-    "color": ""
+  "gradient": { // 梯度颜色 暂时不可用
+    "color": "rgba(255,0,0,0.1)",
+    "size": 4
   },
-  "processText": {
-    "show": true,
-    "fontSize": 20,
-    "color": "#ccc",
-    "follow": false,
-    "textAlign": "center",
-    "textBaseline": "alphabetic"
+  "processText": { // 是否显示文字
+    "show": true, // 是否显示
+    "fontSize": 20, // 文字大小
+    "color": "#ccc", // 文字颜色
+    "follow": false, // 暂时不可用
+    "textAlign": "center", // start end left right center
+    "textBaseline": "alphabetic" // Top Bottom Middle Alphabetic hanging
   }
 }

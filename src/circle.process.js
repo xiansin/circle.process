@@ -2,21 +2,35 @@
  * circle.process v0.0.1
  * https://github.com/xiansin/circle.process
  *
- * Copyright (c) 2014-2017 Zhou JianJia
+ * Copyright (c) 2014-2017 Zhou Jianjia
  * Released under the MIT license
  *
- * Date: 2017-12-19 14:01:36
+ * Date: 2017-12-19
  */
 var CircleProcess = (function (window) {
     // 版本
     var version = "0.0.1";
+    // 当前圆弧角度
+    var angle = 180;
+    // 圆弧角度倍数
+    var cMultiple = 180;
+    // 终点远点倍数
+    var sMultiple = 180;
+    // 全局配置
     var option;
+    // 背景圆弧配置
     var backgroundCircle;
+    // 递进圆弧配置
     var percentCircle;
+    // 开始远点配置
     var startSmallCircle;
+    // 结束远点配置
     var endSmallCircle;
+    // 梯度颜色配置
     var gradient;
+    // 文字配置
     var processText;
+
     var CircleProcess = function (selector) {
         return new CircleProcess.fn.init(selector);
     };
@@ -31,15 +45,21 @@ var CircleProcess = (function (window) {
             if (typeof selector === "undefined") {
                 throw new Error("Unable to get canvas object");
             }
+            // 获取canvas对象
             this.context = selector.getContext("2d");
+            // 获取配置
             this.option = this._option();
+            // 根据canvas获取初始配置
             this._getCanvasOption(selector);
+            // 获取全局配置
             this._getOption();
+            // 执行体
             this.process = function () {
                 this.interVal = setInterval(function () {
                     this.run();
                 }.bind(this), 20);
             };
+            // 设置配置
             this.setOption = function (option) {
                 this._setOption(option);
                 this._getOption();
@@ -51,28 +71,36 @@ var CircleProcess = (function (window) {
          */
         run: function () {
             var process = option.process;
+            if (option.percent > 100 || option.percent < 0) {
+                clearInterval(this.interVal);
+                alert("Percentage out of range,The correct range of 1 - 100");
+                throw new Error("Percentage out of range,The correct range of 1 - 100");
+            }
             if (process >= option.percent) {
+                process = option.percent;
                 clearInterval(this.interVal);
             }
             this._clear();
-            if(backgroundCircle.show){
+            // 设置背景圆是否显示
+            if (backgroundCircle.show) {
                 this._backgroundCircle();
             }
-            if(percentCircle.show){
-                this._circleGradient(option.process);
+            // 设置梯度是否显示
+            if (percentCircle.show) {
+                this._circleGradient(process);
             }
-            if(startSmallCircle.show){
-                // 起始
+            // 设置起始圆点是否显示
+            if (startSmallCircle.show) {
                 this._smallCircle(startSmallCircle.radius, '#06a8f3', 0);
             }
-            if(endSmallCircle.show){
-                // 结束
+            // 设置截止圆点是否显示
+            if (endSmallCircle.show) {
                 this._smallCircle(endSmallCircle.radius, '#00f8bb', process);
             }
-            if(processText.show){
+            // 设置文字是否显示
+            if (processText.show) {
                 this._showProcess(process);
             }
-
             this._speed(option.percentCircle.speed);
         },
         /**
@@ -87,7 +115,6 @@ var CircleProcess = (function (window) {
          * @private
          */
         _backgroundCircle: function () {
-
             // 设置线宽
             this.context.lineWidth = option.lineWidth;
             this.context.beginPath();
@@ -109,17 +136,21 @@ var CircleProcess = (function (window) {
          * @private
          */
         _circleGradient: function (process) {
-
             this.context.beginPath();
             this.context.lineWidth = option.lineWidth;
+
             this.context.arc(backgroundCircle.roundX,
                 backgroundCircle.roundY,
                 option.radius,
                 backgroundCircle.startAngle,
-                backgroundCircle.startAngle + backgroundCircle.startAngle * process / 100,
+                backgroundCircle.startAngle + process / 100 * cMultiple, // Math.PI * 180 / 180 * 2
                 false
             );
-            this.context.strokeStyle = this._linearGradient();
+            if (percentCircle.gradientColorShow) {
+                this.context.strokeStyle = this._linearGradient();
+            } else {
+                this.context.strokeStyle = percentCircle.color;
+            }
             this.context.lineCap = 'round';
             this.context.stroke();
             this.context.closePath();
@@ -136,13 +167,14 @@ var CircleProcess = (function (window) {
             var xEnd = backgroundCircle.roundX + option.radius + this.option.lineWidth;
             var yStart = backgroundCircle.roundY;
             var yEnd = backgroundCircle.roundY;
+
             var linGrad = this.context.createLinearGradient(xStart, yStart, xEnd, yEnd);
 
-            linGrad.addColorStop(0.0, 'rgba(255,0,0,0.1)');
-            linGrad.addColorStop(0.3, 'rgba(255,0,0,0.3)');
-            linGrad.addColorStop(0.5, 'rgba(255,0,0,0.5)');
-            linGrad.addColorStop(0.7, 'rgba(255,0,0,0.7)');
-            linGrad.addColorStop(0.9, 'rgba(255,0,0,0.9)');
+            linGrad.addColorStop(0.0, 'rgba(255,0,0,0.2)');
+            linGrad.addColorStop(0.2, 'rgba(255,0,0,0.4)');
+            linGrad.addColorStop(0.4, 'rgba(255,0,0,0.6)');
+            linGrad.addColorStop(0.6, 'rgba(255,0,0,0.7)');
+            linGrad.addColorStop(0.8, 'rgba(255,0,0,0.9)');
             linGrad.addColorStop(1.0, 'rgba(255,0,0,1)');
 
             return linGrad;
@@ -156,8 +188,9 @@ var CircleProcess = (function (window) {
          * @private
          */
         _smallCircle: function (radius, color, process) {
-            var cx = Math.cos(2 * Math.PI / 360 * (180 + process * 1.8)) * option.radius + backgroundCircle.roundX;
-            var cy = Math.sin(2 * Math.PI / 360 * (180 + process * 1.8)) * option.radius + backgroundCircle.roundY;
+
+            var cx = Math.cos(2 * Math.PI / 360 * (angle + process * sMultiple / 100)) * option.radius + backgroundCircle.roundX;
+            var cy = Math.sin(2 * Math.PI / 360 * (angle + process * sMultiple / 100)) * option.radius + backgroundCircle.roundY;
             this.context.beginPath();
             this.context.arc(cx, cy, radius, 0, Math.PI * 2);
             this.context.lineWidth = 1;
@@ -170,11 +203,20 @@ var CircleProcess = (function (window) {
          * @private
          */
         _showProcess: function (process) {
+            var decimal = 0;
+            var num = option.percent.toString();
+            // 如果当前数字是小数，那么需要保留小数 最大两位
+            if (/\./.test(num) && num.split(".")[1].length > 0) {
+                decimal = num.split(".")[1].length < 2 ? 1 : 2;
+            }
             this.context.font = processText.fontSize + 'px April';
             this.context.textAlign = processText.textAlign;
             this.context.textBaseline = processText.textBaseline;
             this.context.fillStyle = processText.color;
-            this.context.fillText(parseFloat(process).toFixed(0) + '%', backgroundCircle.roundX, backgroundCircle.roundY);
+            this.context.fillText(parseFloat(process).toFixed(decimal) + '%', backgroundCircle.roundX, backgroundCircle.roundY);
+        },
+        _showProcessFollow:function () {
+
         },
         /**
          * 梯度速度
@@ -212,8 +254,8 @@ var CircleProcess = (function (window) {
                 "backgroundCircle": {
                     "roundX": selector.width / 2,
                     "roundY": selector.height / 2,
-                    "startAngle": Math.PI * 180 / 180,
-                    "endAngle": Math.PI * 180 / 180 * 2
+                    "startAngle": Math.PI / 180 * 180,
+                    "endAngle": Math.PI / 180 * 180 * 2
                 }
             });
         },
@@ -248,9 +290,32 @@ var CircleProcess = (function (window) {
             endSmallCircle = option.endSmallCircle;
             gradient = option.gradient;
             processText = option.processText;
+            cMultiple = backgroundCircle.startAngle;
+            if (option.size === "complete") {
+                angle = 540;
+                cMultiple = backgroundCircle.startAngle * 2;
+                sMultiple = 360;
+                this._extend(this.option, {
+                    "backgroundCircle": {
+                        "startAngle": Math.PI / 180 * 120,
+                        "endAngle": Math.PI / 180 * 120 * 4
+                    }
+                });
+            } else if (option.size === "incomplete") {
+                angle = 120;
+                cMultiple = Math.PI * 5 / 3;
+                sMultiple = 300;
+
+                this._extend(this.option, {
+                    "backgroundCircle": {
+                        "startAngle": Math.PI / 180 * 120,
+                        "endAngle": Math.PI / 180 * 420
+                    }
+                });
+            }
         },
-        _setOption:function (option) {
-            this._extend(this.option,option);
+        _setOption: function (option) {
+            this._extend(this.option, option);
         },
         /**
          * 初始参数配置
@@ -263,7 +328,6 @@ var CircleProcess = (function (window) {
                 "size": "half", //complete,half,incomplete or todo-percent
                 "lineWidth": 5,
                 "radius": 100,
-                "position": "center",
                 "percent": 80,
                 "process": 0.00,
                 "backgroundCircle": {
@@ -276,8 +340,10 @@ var CircleProcess = (function (window) {
                 },
                 "percentCircle": {
                     "show": true,
-                    "color": "",
+                    "color": "#f00",
                     "speed": "gradient",//gradient normal fast
+                    "gradientColorShow": false,
+                    "gradientColor": "rgba(255.0.0,0.1)"
                 },
                 "startSmallCircle": {
                     "show": true,
@@ -290,7 +356,8 @@ var CircleProcess = (function (window) {
                     "radius": 5
                 },
                 "gradient": {
-                    "color": ""// todo 梯度颜色
+                    "color": "rgba(255,0,0,0.1)",// todo 梯度颜色
+                    "size": 4
                 },
                 "processText": {
                     "show": true,
