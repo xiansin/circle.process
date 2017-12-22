@@ -1,43 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>圆环渐变</title>
     <!--<link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://v3.bootcss.com/assets/css/docs.css" />
     <style type="text/css">
-        .white{
+        .white {
             color: white !important;
         }
     </style>
 </head>
+
 <body>
 <!--Header-->
 <header class="navbar navbar-light navbar-expand-md bg-primary">
     <div class="container">
         <a class="navbar-brand white" href="./">CircleProcess.js</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse"
-                aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbar-collapse" role="navigation">
             <nav class="nav navbar-nav">
-                <a class="nav-link white" href="https://github.com/xiansin/circle.process"
-                   data-toggle="tooltip" title="View the GitHub project">Github</a>
+                <a class="nav-link white" href="https://github.com/xiansin/circle.process" data-toggle="tooltip" title="View the GitHub project">Github</a>
             </nav>
         </div>
     </div>
 </header>
 <!--content-->
-<div class="container">
+<div class="container" style="margin-top: 10px;">
     <div class="row">
-        <div class="col-md-5">
-            <canvas id="canvas" width="300" height="300" class=""></canvas>
+        <div class="col-md-12 bs-example">
+            <canvas id="half" width="250" height="300"></canvas>
+            <canvas id="incomplete" width="250" height="300"></canvas>
+            <canvas id="complete" width="250" height="300"></canvas>
         </div>
-        <div class="col-md-7">
-
-        </div>
+        <figure class="highlight col-md-12">
+                    <pre>
+                        <code class="language-json" data-lang="json">
+                            {<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;"size": "incomplete", //complete,half,incomplete or todo-percent<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;"percent": 50,<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;"process": 10,<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;"backgroundCircle": {<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"color": "#ccc"<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;"percentCircle": {<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"show": true,<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"color": "red",<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"speed": "gradient", //gradient normal fast<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"gradientColorShow": true<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;"startSmallCircle": {<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"show": false,<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"radius": 5,<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;"endSmallCircle": {<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"show": false,<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"radius": 5<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;"processText": {<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"show": true,<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"color": "blue",<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"follow": true<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+                            }
+                        </code>
+                    </pre>
+        </figure>
     </div>
 </div>
 <!-- Footer -->
@@ -52,25 +85,34 @@
         </nav>
     </div>
 </footer>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>
-<script src="../src/circle.process.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="./js/circle.process.min.js"></script>
 <script type="text/javascript">
-    var circleProcess = CircleProcess(document.getElementById("canvas"));
-    circleProcess.setOption({
-        "percent": 60,
-        "startSmallCircle": {
-            "radius": 6
-        },
-        "endSmallCircle": {
-            "radius": 12
-        },
-        "processText": {
-            "color": "red"
-        }
+    CircleProcess(document.getElementById("half"),{
+        "percent": 40,
+        "startSmallCircle":{"show": true}
     });
-    circleProcess.process();
-    console.log(circleProcess);
+    CircleProcess(document.getElementById("incomplete"),{
+        "size":"complete", //complete,half,incomplete or todo-percent
+        "percent": 50,
+        "percentCircle":{
+            "show":true,
+            "color":"red",
+            "speed": "gradient",//gradient normal fast
+            "gradientColorShow":true
+        },
+        "endSmallCircle":{
+            "show": true,
+        },
+    });
+    CircleProcess(document.getElementById("complete"),{
+        "percent": 50,
+        "size":"complete",
+        "startSmallCircle":{"show": true},
+        "endSmallCircle":{"show": true}
+    });
 </script>
 </body>
+
 </html>

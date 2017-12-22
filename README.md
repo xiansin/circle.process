@@ -7,28 +7,12 @@
 
 ### 使用方法
 
-	// 传入 canvas 对象
-	var circleProcess = CircleProcess(document.getElementById("canvas"));
-	// 开始
-	circleProcess.process();
-
-### 配置项
-如果有需要使用配置，可以通过 `circleProcess.setOption()`
+	// 传入 canvas 对象 & 配置
+	 CircleProcess(document.getElementById("canvas"),{
+	    "percent": 40,
+        "startSmallCircle":{"show": true}
+     });
 	
-	circleProcess.setOption({
-        "percent": 60,
-        "startSmallCircle":{
-            "radius": 6
-        },
-        "endSmallCircle":{
-            "radius": 12
-        },
-        "processText":{
-            "color":"red"
-        }
-    });
-
-	circleProcess.process();
 ### License
 MIT © Zhou JianJia
 
