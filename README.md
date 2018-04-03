@@ -10,7 +10,7 @@
 	// 传入 canvas 对象 & 配置
 	 CircleProcess(document.getElementById("canvas"),{
 	    "percent": 40,
-        "startSmallCircle":{"show": true}
+        "startSmallCircle":{"show": false}
      });
 	
 ### License
