@@ -1,5 +1,5 @@
 /**
- * Created by JianJia.Zhou<jianjia.zhou@longmaster.com.cn> on 2017/12/18.
+ * Created by JianJia.Zhou<z656123456@gmail.com> on 2017/12/18.
  */
 var CircleProcess = (function (window) {
     // 版本
